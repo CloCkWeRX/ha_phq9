@@ -33,6 +33,34 @@ Place the `custom_components` folder in your configuration directory (or add its
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=CloCkWeRX&repository=ha_phq9&category=integration)
 
+If your have have a person named `jane`; the generated sensors should follow the format of `select.phq_9_question_1_jane`
+
+Set up a dashboard as raw YAML.
+```
+views:
+  - title: Home
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: PHQ-9
+          - type: entities
+            entities:
+              - select.phq_9_question_1_jane
+              - select.phq_9_question_2_jane
+              - select.phq_9_question_3_jane
+              - select.phq_9_question_4_jane
+              - select.phq_9_question_5_jane
+              - select.phq_9_question_6_jane
+              - select.phq_9_question_7_jane
+              - select.phq_9_question_8_jane
+              - select.phq_9_question_9_jane
+              - select.phq_9_difficulty_jane
+              - sensor.phq_9_score_interpretation_jane
+              - sensor.phq_9_total_score_jane
+              - sensor.phq_9_last_evaluated_jane
+```
+
 ## Example Automations
 
 ### Severe Score Notification
