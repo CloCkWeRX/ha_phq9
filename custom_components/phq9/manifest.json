@@ -10,6 +10,6 @@
   "iot_class": "calculated",
   "config_flow": true,
   "translations": {
-    "en": "./strings.json"
+    "en": "./translations/en.json"
   }
 }
