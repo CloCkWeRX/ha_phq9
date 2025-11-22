@@ -25,6 +25,8 @@ It is not:
 
 The questions asked are sensitive; do *not* use this without the consent of all parties in your home assistant installation.
 
+Be aware that there are *no encryptions or similar* of this data; and it is visible to all other integrations you may be running in your home assistant - cloud or AI tooling may have full access to this.
+
 ## Example Automations
 
 ### Severe Score Notification
