@@ -26,14 +26,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up the PHQ-9 input selects."""
 
-    translations = await async_get_translations(hass, DOMAIN, hass.config.language)
-
-    phq9_answers = [
-        translations[f"component.{DOMAIN}.entity.select.phq9_answers.state.{key}"] for key in PHQ9_ANSWER_KEYS
-    ]
-    difficulty_answers = [
-        translations[f"component.{DOMAIN}.entity.select.difficulty_answers.state.{key}"] for key in DIFFICULTY_ANSWER_KEYS
-    ]
+    translations = await async_get_translations(hass, "component", hass.config.language, DOMAIN)
 
     entity_registry = er.async_get(hass)
 
@@ -50,25 +43,31 @@ async def async_setup_entry(
         )
 
         for i in range(9):
+            question_key = f"phq9_question_{i+1}"
+            translated_name = translations[f"component.{DOMAIN}.entity.select.{question_key}.name"]
             entities.append(
                 PHQ9QuestionSelect(
                     hass,
                     person_entity,
                     device_info,
                     f"phq9_q{i+1}_{person_entity.unique_id}",
-                    f"phq9_question_{i+1}",
-                    phq9_answers,
+                    translated_name,
+                    "phq9_answers",
+                    PHQ9_ANSWER_KEYS,
                 )
             )
 
+        difficulty_key = "phq9_difficulty"
+        translated_difficulty_name = translations[f"component.{DOMAIN}.entity.select.{difficulty_key}.name"]
         entities.append(
             PHQ9QuestionSelect(
                 hass,
                 person_entity,
                 device_info,
                 f"phq9_difficulty_{person_entity.unique_id}",
-                "phq9_difficulty",
-                difficulty_answers,
+                translated_difficulty_name,
+                "difficulty_answers",
+                DIFFICULTY_ANSWER_KEYS,
             )
         )
 
@@ -84,6 +83,7 @@ class PHQ9QuestionSelect(SelectEntity):
         person_entity: er.RegistryEntry,
         device_info: DeviceInfo,
         unique_id: str,
+        name: str,
         translation_key: str,
         options: list[str],
     ):
@@ -92,6 +92,7 @@ class PHQ9QuestionSelect(SelectEntity):
         self._person_entity = person_entity
         self._attr_device_info = device_info
         self._attr_unique_id = unique_id
+        self._attr_name = name
         self._attr_translation_key = translation_key
         self._attr_options = options
         self._attr_current_option = options[0] if options else None
