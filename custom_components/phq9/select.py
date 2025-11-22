@@ -66,8 +66,8 @@ async def async_setup_entry(
                     hass,
                     person_entity,
                     device_info,
-                    f"phq9_{person_entity.unique_id}_{i+1}",
-                    f"{PHQ9_QUESTIONS[i]} {person_entity.name}",
+                    f"phq9_q{i+1}_{person_entity.unique_id}",
+                    question,
                     PHQ9_ANSWERS,
                 )
             )
@@ -77,8 +77,7 @@ async def async_setup_entry(
                 hass,
                 person_entity,
                 device_info,
-                f"phq9_{person_entity.unique_id}_difficulty",
-                f"{DIFFICULTY_QUESTION} {person_entity.name}",
+                f"phq9_difficulty_{person_entity.unique_id}",
                 DIFFICULTY_QUESTION,
                 DIFFICULTY_ANSWERS,
             )
