@@ -104,7 +104,8 @@ class PHQ9QuestionSelect(SelectEntity):
         self._attr_device_info = device_info
         self._attr_unique_id = unique_id
         self._attr_name = unique_id
-        self._attr_friendly_name = name
+        # TODO: There must be a way to programatically set this at some point.
+        # self._attr_friendly_name = name
         self._attr_options = options
         self._attr_current_option = options[0] if options else None
 
@@ -112,6 +113,7 @@ class PHQ9QuestionSelect(SelectEntity):
     def extra_state_attributes(self):
         """Return the state attributes."""
         return {
+            "friendly_name": name,
             "person_entity_id": self._person_entity.entity_id,
         }
 
