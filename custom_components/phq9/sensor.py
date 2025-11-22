@@ -48,7 +48,6 @@ async def async_setup_entry(
                 person_entity,
                 device_info,
                 f"phq9_{person_entity.unique_id}_score",
-                f"PHQ-9 Total Score {person_entity.name}",
             )
         )
 
@@ -58,7 +57,6 @@ async def async_setup_entry(
                 person_entity,
                 device_info,
                 f"phq9_{person_entity.unique_id}_last_evaluated",
-                f"PHQ-9 Last Evaluated {person_entity.name}",
             )
         )
 
@@ -68,7 +66,6 @@ async def async_setup_entry(
                 person_entity,
                 device_info,
                 f"phq9_{person_entity.unique_id}_score_interpretation",
-                f"PHQ-9 Score Interpretation {person_entity.name}",
             )
         )
 
@@ -84,16 +81,16 @@ class PHQ9TotalScoreSensor(SensorEntity):
         person_entity: er.RegistryEntry,
         device_info: DeviceInfo,
         unique_id: str,
-        name: str,
     ):
         """Initialize the sensor."""
         self.hass = hass
         self._person_entity = person_entity
         self._attr_device_info = device_info
         self._attr_unique_id = unique_id
-        self._attr_name = name
         self._attr_native_value = 0
         self._question_entity_ids = []
+        self._attr_translation_key = "phq9_total_score"
+
 
     async def async_added_to_hass(self) -> None:
         """Register state change listener and discover entity IDs."""
@@ -147,16 +144,16 @@ class PHQ9LastEvaluatedSensor(SensorEntity):
         person_entity: er.RegistryEntry,
         device_info: DeviceInfo,
         unique_id: str,
-        name: str,
     ):
         """Initialize the sensor."""
         self.hass = hass
         self._person_entity = person_entity
         self._attr_device_info = device_info
         self._attr_unique_id = unique_id
-        self._attr_name = name
         self._attr_native_value = None
         self._all_question_entity_ids = []
+        self._attr_translation_key = "phq9_last_evaluated"
+
 
     async def async_added_to_hass(self) -> None:
         """Register state change listener and discover entity IDs."""
@@ -209,16 +206,16 @@ class PHQ9ScoreInterpretationSensor(SensorEntity):
         person_entity: er.RegistryEntry,
         device_info: DeviceInfo,
         unique_id: str,
-        name: str,
     ):
         """Initialize the sensor."""
         self.hass = hass
         self._person_entity = person_entity
         self._attr_device_info = device_info
         self._attr_unique_id = unique_id
-        self._attr_name = name
-        self._attr_native_value = "None-minimal"
+        self._attr_native_value = "none_minimal"
         self._total_score_entity_id = None
+        self._attr_translation_key = "phq9_score_interpretation"
+
 
     async def async_added_to_hass(self) -> None:
         """Register state change listener."""
@@ -254,16 +251,16 @@ class PHQ9ScoreInterpretationSensor(SensorEntity):
             try:
                 score = int(state.state)
                 if 0 <= score <= 4:
-                    self._attr_native_value = "None-minimal"
+                    self._attr_native_value = "none_minimal"
                 elif 5 <= score <= 9:
-                    self._attr_native_value = "Mild"
+                    self._attr_native_value = "mild"
                 elif 10 <= score <= 14:
-                    self._attr_native_value = "Moderate"
+                    self._attr_native_value = "moderate"
                 elif 15 <= score <= 19:
-                    self._attr_native_value = "Moderately Severe"
+                    self._attr_native_value = "moderately_severe"
                 else: # 20 <= score <= 27:
-                    self._attr_native_value = "Severe"
+                    self._attr_native_value = "severe"
                 self.async_write_ha_state()
             except (ValueError, TypeError):
-                self._attr_native_value = "Unknown"
+                self._attr_native_value = "unknown"
                 self.async_write_ha_state()

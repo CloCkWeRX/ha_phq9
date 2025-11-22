@@ -2,11 +2,18 @@
 
 DOMAIN = "phq9"
 
-PHQ9_ANSWERS = [
-    "Not at all",
-    "Several days",
-    "More than half the days",
-    "Nearly every day",
+PHQ9_ANSWER_KEYS = [
+    "not_at_all",
+    "several_days",
+    "more_than_half_the_days",
+    "nearly_every_day",
 ]
 
-SCORE_MAP = {answer: i for i, answer in enumerate(PHQ9_ANSWERS)}
+DIFFICULTY_ANSWER_KEYS = [
+    "not_difficult_at_all",
+    "somewhat_difficult",
+    "very_difficult",
+    "extremely_difficult",
+]
+
+SCORE_MAP = {answer_key: i for i, answer_key in enumerate(PHQ9_ANSWER_KEYS)}
