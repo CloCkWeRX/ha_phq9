@@ -113,7 +113,7 @@ class PHQ9TotalScoreSensor(SensorEntity):
                             self.hass, self._question_entity_ids, self._async_update_score
                         )
                     )
-                    self.hass.async_create_task(self._async_update_score(None, None, None))
+                    self.hass.async_create_task(self._async_update_score(None))
                     return
 
                 await asyncio.sleep(10)
@@ -236,7 +236,7 @@ class PHQ9ScoreInterpretationSensor(SensorEntity):
                             self.hass, self._total_score_entity_id, self._async_update_interpretation
                         )
                     )
-                    self.hass.async_create_task(self._async_update_interpretation(None, None, None))
+                    self.hass.async_create_task(self._async_update_interpretation(None))
                     return
 
                 await asyncio.sleep(10)
