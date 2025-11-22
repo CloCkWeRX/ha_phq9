@@ -29,9 +29,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         er.EVENT_ENTITY_REGISTRY_UPDATED, entity_registry_listener
     )
 
-    hass.async_create_task(
-        hass.config_entries.async_forward_entry_setup(entry, "input_select")
-    )
+    hass.config_entries.async_setup_platforms(entry, ["input_select", "sensor"])
 
     return True
 
@@ -42,7 +40,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if listener := hass.data[DOMAIN].pop("entity_registry_listener", None):
         listener()
 
-    return await hass.config_entries.async_forward_entry_unload(entry, "input_select")
+    return await hass.config_entries.async_unload_platforms(entry, ["input_select", "sensor"])
 
 """
 Kroenke K, Spitzer RL, Williams JB. The PHQ-9: validity of a brief depression severity measure. J Gen Intern Med. 2001 Sep;16(9):606-13. doi: 10.1046/j.1525-1497.2001.016009606.x. PMID: 11556941; PMCID: PMC1495268.

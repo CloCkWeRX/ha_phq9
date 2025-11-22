@@ -14,7 +14,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 from homeassistant.helpers.entity import DeviceInfo
 
-from .const import DOMAIN
+from .const import DOMAIN, PHQ9_ANSWERS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -30,11 +30,12 @@ PHQ9_QUESTIONS = [
     "Thoughts that you would be better off dead or of hurting yourself in some way",
 ]
 
-PHQ9_ANSWERS = [
-    "Not at all",
-    "Several days",
-    "More than half the days",
-    "Nearly every day",
+DIFFICULTY_QUESTION = "If you checked off any problems, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?"
+DIFFICULTY_ANSWERS = [
+    "Not difficult at all",
+    "Somewhat difficult",
+    "Very difficult",
+    "Extremely difficult",
 ]
 
 
@@ -66,10 +67,23 @@ async def async_setup_entry(
                     person_entity,
                     device_info,
                     f"phq9_{person_entity.unique_id}_{i+1}",
-                    f"PHQ-9 Question {i+1}",
+                    f"PHQ-9 Question {i+1} {person_entity.name}",
                     question,
+                    PHQ9_ANSWERS,
                 )
             )
+
+        entities.append(
+            PHQ9QuestionSelect(
+                hass,
+                person_entity,
+                device_info,
+                f"phq9_{person_entity.unique_id}_difficulty",
+                f"PHQ-9 Difficulty {person_entity.name}",
+                DIFFICULTY_QUESTION,
+                DIFFICULTY_ANSWERS,
+            )
+        )
 
     async_add_entities(entities)
 
@@ -85,6 +99,7 @@ class PHQ9QuestionSelect(InputSelectEntity):
         unique_id: str,
         name: str,
         question: str,
+        options: list[str],
     ):
         """Initialize the input select."""
         self.hass = hass
@@ -93,8 +108,8 @@ class PHQ9QuestionSelect(InputSelectEntity):
         self._attr_unique_id = unique_id
         self._attr_name = name
         self._question = question
-        self._attr_options = PHQ9_ANSWERS
-        self._attr_current_option = PHQ9_ANSWERS[0]
+        self._attr_options = options
+        self._attr_current_option = options[0] if options else None
 
     @property
     def extra_state_attributes(self):
