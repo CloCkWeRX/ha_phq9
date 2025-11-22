@@ -14,7 +14,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.helpers.event import async_track_state_change
+from homeassistant.helpers.event import async_track_state_change_event
 
 from .const import DOMAIN, SCORE_MAP
 
@@ -109,7 +109,7 @@ class PHQ9TotalScoreSensor(SensorEntity):
 
                 if len(self._question_entity_ids) == 9:
                     self.async_on_remove(
-                        async_track_state_change(
+                        async_track_state_change_event(
                             self.hass, self._question_entity_ids, self._async_update_score
                         )
                     )
@@ -123,7 +123,7 @@ class PHQ9TotalScoreSensor(SensorEntity):
         self.hass.async_create_task(_find_question_entities_with_retry())
 
     @callback
-    async def _async_update_score(self, entity_id, old_state, new_state) -> None:
+    async def _async_update_score(self, event) -> None:
         """Update the total score."""
         score = 0
         for entity_id in self._question_entity_ids:
@@ -177,7 +177,7 @@ class PHQ9LastEvaluatedSensor(SensorEntity):
 
                 if len(self._all_question_entity_ids) == 10:
                     self.async_on_remove(
-                        async_track_state_change(
+                        async_track_state_change_event(
                             self.hass, self._all_question_entity_ids, self._async_update_timestamp
                         )
                     )
@@ -190,8 +190,10 @@ class PHQ9LastEvaluatedSensor(SensorEntity):
         self.hass.async_create_task(_find_question_entities_with_retry())
 
     @callback
-    async def _async_update_timestamp(self, entity_id, old_state, new_state) -> None:
+    async def _async_update_timestamp(self, event) -> None:
         """Update the timestamp."""
+        old_state = event.data.get("old_state")
+        new_state = event.data.get("new_state")
         if old_state is not None and new_state is not None and old_state.state != new_state.state:
             self._attr_native_value = datetime.now().isoformat()
             self.async_write_ha_state()
@@ -230,7 +232,7 @@ class PHQ9ScoreInterpretationSensor(SensorEntity):
 
                 if self._total_score_entity_id:
                     self.async_on_remove(
-                        async_track_state_change(
+                        async_track_state_change_event(
                             self.hass, self._total_score_entity_id, self._async_update_interpretation
                         )
                     )
@@ -244,7 +246,7 @@ class PHQ9ScoreInterpretationSensor(SensorEntity):
         self.hass.async_create_task(_find_score_entity_with_retry())
 
     @callback
-    async def _async_update_interpretation(self, entity_id, old_state, new_state) -> None:
+    async def _async_update_interpretation(self, event) -> None:
         """Update the score interpretation."""
         state = self.hass.states.get(self._total_score_entity_id)
         if state and state.state is not None:
