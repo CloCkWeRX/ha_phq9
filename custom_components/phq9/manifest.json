@@ -1,0 +1,11 @@
+{
+  "domain": "phq9",
+  "name": "PHQ-9",
+  "documentation": "",
+  "issue_tracker": "",
+  "codeowners": [],
+  "requirements": [],
+  "version": "0.1.0",
+  "iot_class": "calculated",
+  "config_flow": true
+}
