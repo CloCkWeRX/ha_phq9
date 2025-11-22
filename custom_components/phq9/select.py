@@ -56,7 +56,7 @@ async def async_setup_entry(
     for person_entity in person_entities:
         device_info = DeviceInfo(
             identifiers={(DOMAIN, person_entity.unique_id)},
-            name=person_entity.name,
+            name=f"PHQ-9 {person_entity.name}",
             entry_type=dr.DeviceEntryType.SERVICE,
         )
 
@@ -68,7 +68,6 @@ async def async_setup_entry(
                     device_info,
                     f"phq9_{person_entity.unique_id}_{i+1}",
                     f"{PHQ9_QUESTIONS[i]} {person_entity.name}",
-                    question,
                     PHQ9_ANSWERS,
                 )
             )
@@ -98,7 +97,6 @@ class PHQ9QuestionSelect(SelectEntity):
         device_info: DeviceInfo,
         unique_id: str,
         name: str,
-        question: str,
         options: list[str],
     ):
         """Initialize the input select."""
@@ -108,7 +106,6 @@ class PHQ9QuestionSelect(SelectEntity):
         self._attr_unique_id = unique_id
         self._attr_name = unique_id
         self._attr_friendly_name = name
-        self._question = question
         self._attr_options = options
         self._attr_current_option = options[0] if options else None
 
@@ -116,7 +113,6 @@ class PHQ9QuestionSelect(SelectEntity):
     def extra_state_attributes(self):
         """Return the state attributes."""
         return {
-            "question": self._question,
             "person_entity_id": self._person_entity.entity_id,
         }
 
