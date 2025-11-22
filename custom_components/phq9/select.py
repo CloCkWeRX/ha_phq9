@@ -67,7 +67,7 @@ async def async_setup_entry(
                     person_entity,
                     device_info,
                     f"phq9_{person_entity.unique_id}_{i+1}",
-                    f"{PHQ9_QUESTIONS[i] {person_entity.name}",
+                    f"{PHQ9_QUESTIONS[i]} {person_entity.name}",
                     question,
                     PHQ9_ANSWERS,
                 )
