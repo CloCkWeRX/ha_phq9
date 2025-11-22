@@ -7,7 +7,7 @@ from typing import Iterable
 
 import logging
 
-from homeassistant.components.input_select import InputSelectEntity
+from homeassistant.components.select import SelectEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -88,7 +88,7 @@ async def async_setup_entry(
     async_add_entities(entities)
 
 
-class PHQ9QuestionSelect(InputSelectEntity):
+class PHQ9QuestionSelect(SelectEntity):
     """Representation of a PHQ-9 Question input select."""
 
     def __init__(
