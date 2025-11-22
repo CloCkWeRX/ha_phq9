@@ -1,5 +1,4 @@
 """Platform for PHQ-9 input selects.
-
 Kroenke K, Spitzer RL, Williams JB. The PHQ-9: validity of a brief depression severity measure. J Gen Intern Med. 2001 Sep;16(9):606-13. doi: 10.1046/j.1525-1497.2001.016009606.x. PMID: 11556941; PMCID: PMC1495268.
 """
 from __future__ import annotations
@@ -13,31 +12,12 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 from homeassistant.helpers.entity import DeviceInfo
+from homeassistant.helpers.translation import async_get_translations
 
-from .const import DOMAIN, PHQ9_ANSWERS
+
+from .const import DOMAIN, PHQ9_ANSWER_KEYS, DIFFICULTY_ANSWER_KEYS
 
 _LOGGER = logging.getLogger(__name__)
-
-PHQ9_QUESTIONS = [
-    "Little interest or pleasure in doing things",
-    "Feeling down, depressed, or hopeless",
-    "Trouble falling or staying asleep, or sleeping too much",
-    "Feeling tired or having little energy",
-    "Poor appetite or overeating",
-    "Feeling bad about yourself - or that you are a failure or have let yourself or your family down",
-    "Trouble concentrating on things, such as reading the newspaper or watching television",
-    "Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual",
-    "Thoughts that you would be better off dead or of hurting yourself in some way",
-]
-
-DIFFICULTY_QUESTION = "If you checked off any problems, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?"
-DIFFICULTY_ANSWERS = [
-    "Not difficult at all",
-    "Somewhat difficult",
-    "Very difficult",
-    "Extremely difficult",
-]
-
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -45,6 +25,15 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up the PHQ-9 input selects."""
+
+    translations = await async_get_translations(hass, DOMAIN, hass.config.language)
+
+    phq9_answers = [
+        translations[f"component.{DOMAIN}.entity.select.phq9_answers.state.{key}"] for key in PHQ9_ANSWER_KEYS
+    ]
+    difficulty_answers = [
+        translations[f"component.{DOMAIN}.entity.select.difficulty_answers.state.{key}"] for key in DIFFICULTY_ANSWER_KEYS
+    ]
 
     entity_registry = er.async_get(hass)
 
@@ -60,15 +49,15 @@ async def async_setup_entry(
             entry_type=dr.DeviceEntryType.SERVICE,
         )
 
-        for i, question in enumerate(PHQ9_QUESTIONS):
+        for i in range(9):
             entities.append(
                 PHQ9QuestionSelect(
                     hass,
                     person_entity,
                     device_info,
                     f"phq9_q{i+1}_{person_entity.unique_id}",
-                    question,
-                    PHQ9_ANSWERS,
+                    f"phq9_question_{i+1}",
+                    phq9_answers,
                 )
             )
 
@@ -78,8 +67,8 @@ async def async_setup_entry(
                 person_entity,
                 device_info,
                 f"phq9_difficulty_{person_entity.unique_id}",
-                DIFFICULTY_QUESTION,
-                DIFFICULTY_ANSWERS,
+                "phq9_difficulty",
+                difficulty_answers,
             )
         )
 
@@ -95,7 +84,7 @@ class PHQ9QuestionSelect(SelectEntity):
         person_entity: er.RegistryEntry,
         device_info: DeviceInfo,
         unique_id: str,
-        name: str,
+        translation_key: str,
         options: list[str],
     ):
         """Initialize the input select."""
@@ -103,9 +92,7 @@ class PHQ9QuestionSelect(SelectEntity):
         self._person_entity = person_entity
         self._attr_device_info = device_info
         self._attr_unique_id = unique_id
-        self._attr_name = unique_id
-        # TODO: There must be a way to programatically set this at some point.
-        # self._attr_friendly_name = name
+        self._attr_translation_key = translation_key
         self._attr_options = options
         self._attr_current_option = options[0] if options else None
 
@@ -113,7 +100,6 @@ class PHQ9QuestionSelect(SelectEntity):
     def extra_state_attributes(self):
         """Return the state attributes."""
         return {
-            "friendly_name": name,
             "person_entity_id": self._person_entity.entity_id,
         }
 

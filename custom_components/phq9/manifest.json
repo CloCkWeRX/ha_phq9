@@ -8,5 +8,8 @@
   "requirements": [],
   "version": "0.1.0",
   "iot_class": "calculated",
-  "config_flow": true
+  "config_flow": true,
+  "translations": {
+    "en": "./strings.json"
+  }
 }

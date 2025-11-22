@@ -1,0 +1,81 @@
+{
+    "title": "PHQ-9",
+    "config": {
+        "abort": {
+            "single_instance_allowed": "Only a single instance of PHQ-9 is allowed."
+        },
+        "step": {
+            "user": {
+            }
+        }
+    },
+    "entity": {
+        "select": {
+            "phq9_question_1": {
+                "name": "Little interest or pleasure in doing things"
+            },
+            "phq9_question_2": {
+                "name": "Feeling down, depressed, or hopeless"
+            },
+            "phq9_question_3": {
+                "name": "Trouble falling or staying asleep, or sleeping too much"
+            },
+            "phq9_question_4": {
+                "name": "Feeling tired or having little energy"
+            },
+            "phq9_question_5": {
+                "name": "Poor appetite or overeating"
+            },
+            "phq9_question_6": {
+                "name": "Feeling bad about yourself - or that you are a failure or have let yourself or your family down"
+            },
+            "phq9_question_7": {
+                "name": "Trouble concentrating on things, such as reading the newspaper or watching television"
+            },
+            "phq9_question_8": {
+                "name": "Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual"
+            },
+            "phq9_question_9": {
+                "name": "Thoughts that you would be better off dead or of hurting yourself in some way"
+            },
+            "phq9_difficulty": {
+                "name": "If you checked off any problems, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?"
+            },
+            "phq9_answers": {
+                "state": {
+                    "not_at_all": "Not at all",
+                    "several_days": "Several days",
+                    "more_than_half_the_days": "More than half the days",
+                    "nearly_every_day": "Nearly every day"
+                }
+            },
+            "difficulty_answers": {
+                "state": {
+                    "not_difficult_at_all": "Not difficult at all",
+                    "somewhat_difficult": "Somewhat difficult",
+                    "very_difficult": "Very difficult",
+                    "extremely_difficult": "Extremely difficult"
+                }
+            }
+        }
+    },
+    "sensor": {
+        "phq9_total_score": {
+            "name": "PHQ-9 Total Score"
+        },
+        "phq9_last_evaluated": {
+            "name": "PHQ-9 Last Evaluated"
+        },
+        "phq9_score_interpretation": {
+            "name": "PHQ-9 Score Interpretation",
+            "state": {
+                "none_minimal": "None-minimal",
+                "mild": "Mild",
+                "moderate": "Moderate",
+                "moderately_severe": "Moderately Severe",
+                "severe": "Severe",
+                "unknown": "Unknown"
+            }
+        }
+    }
+}
