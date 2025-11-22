@@ -27,6 +27,12 @@ The questions asked are sensitive; do *not* use this without the consent of all 
 
 Be aware that there are *no encryptions or similar* of this data; and it is visible to all other integrations you may be running in your home assistant - cloud or AI tooling may have full access to this.
 
+## Installation
+
+Place the `custom_components` folder in your configuration directory (or add its contents to an existing `custom_components` folder). Alternatively install via [HACS](https://hacs.xyz/).
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=CloCkWeRX&repository=ha_phq9&category=integration)
+
 ## Example Automations
 
 ### Severe Score Notification
