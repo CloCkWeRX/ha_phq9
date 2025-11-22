@@ -29,7 +29,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         er.EVENT_ENTITY_REGISTRY_UPDATED, entity_registry_listener
     )
 
-    hass.config_entries.async_setup_platforms(entry, ["input_select", "sensor"])
+    await hass.config_entries.async_forward_entry_setups(entry, ["input_select", "sensor"])
 
     return True
 
