@@ -106,7 +106,8 @@ class PHQ9QuestionSelect(SelectEntity):
         self._person_entity = person_entity
         self._attr_device_info = device_info
         self._attr_unique_id = unique_id
-        self._attr_name = name
+        self._attr_name = unique_id
+        self._attr_friendly_name = name
         self._question = question
         self._attr_options = options
         self._attr_current_option = options[0] if options else None
