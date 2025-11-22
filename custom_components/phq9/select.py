@@ -26,7 +26,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up the PHQ-9 input selects."""
 
-    translations = await async_get_translations(hass, DOMAIN, hass.config.language)
+    translations = await async_get_translations(hass, "component", hass.config.language, DOMAIN)
 
     phq9_answers = [
         translations[f"component.{DOMAIN}.entity.select.phq9_answers.state.{key}"] for key in PHQ9_ANSWER_KEYS
