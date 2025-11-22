@@ -103,7 +103,7 @@ class PHQ9TotalScoreSensor(SensorEntity):
                 self._question_entity_ids = []
                 for i in range(9):
                     unique_id = f"phq9_{self._person_entity.unique_id}_{i+1}"
-                    entity_id = entity_registry.async_get_entity_id("input_select", DOMAIN, unique_id)
+                    entity_id = entity_registry.async_get_entity_id("select", DOMAIN, unique_id)
                     if entity_id:
                         self._question_entity_ids.append(entity_id)
 
@@ -166,12 +166,12 @@ class PHQ9LastEvaluatedSensor(SensorEntity):
                 self._all_question_entity_ids = []
                 for i in range(9):
                     unique_id = f"phq9_{self._person_entity.unique_id}_{i+1}"
-                    entity_id = entity_registry.async_get_entity_id("input_select", DOMAIN, unique_id)
+                    entity_id = entity_registry.async_get_entity_id("select", DOMAIN, unique_id)
                     if entity_id:
                         self._all_question_entity_ids.append(entity_id)
 
                 difficulty_unique_id = f"phq9_{self._person_entity.unique_id}_difficulty"
-                difficulty_entity_id = entity_registry.async_get_entity_id("input_select", DOMAIN, difficulty_unique_id)
+                difficulty_entity_id = entity_registry.async_get_entity_id("select", DOMAIN, difficulty_unique_id)
                 if difficulty_entity_id:
                     self._all_question_entity_ids.append(difficulty_entity_id)
 
