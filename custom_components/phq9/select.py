@@ -1,5 +1,5 @@
 """Platform for PHQ-9 input selects.
-Kroenke K, Spitzer RL, Williams JB. The PHQ-9: validity of a brief depression severity measure. J Gen Intern Med. 2001 Sep;16(9):606-13. doi: 10.46/j.1525-1497.2001.016009606.x. PMID: 11556941; PMCID: PMC1495268.
+Kroenke K, Spitzer RL, Williams JB. The PHQ-9: validity of a brief depression severity measure. J Gen Intern Med. 2001 Sep;16(9):606-13. doi: 10.1046/j.1525-1497.2001.016009606.x. PMID: 11556941; PMCID: PMC1495268.
 """
 from __future__ import annotations
 from typing import Iterable
