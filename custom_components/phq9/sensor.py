@@ -38,7 +38,7 @@ async def async_setup_entry(
     for person_entity in person_entities:
         device_info = DeviceInfo(
             identifiers={(DOMAIN, person_entity.unique_id)},
-            name=person_entity.name,
+            name=f"PHQ-9 {person_entity.original_name}",
             entry_type=dr.DeviceEntryType.SERVICE,
         )
 
@@ -102,7 +102,7 @@ class PHQ9TotalScoreSensor(SensorEntity):
                 entity_registry = er.async_get(self.hass)
                 self._question_entity_ids = []
                 for i in range(9):
-                    unique_id = f"phq9_{self._person_entity.unique_id}_{i+1}"
+                    unique_id = f"phq9_q{i+1}_{self._person_entity.unique_id}"
                     entity_id = entity_registry.async_get_entity_id("select", DOMAIN, unique_id)
                     if entity_id:
                         self._question_entity_ids.append(entity_id)
@@ -116,9 +116,9 @@ class PHQ9TotalScoreSensor(SensorEntity):
                     self.hass.async_create_task(self._async_update_score(None))
                     return
 
-                await asyncio.sleep(10)
+                await asyncio.sleep(0)
 
-            _LOGGER.error("Could not find all 9 PHQ-9 question entities for %s after multiple retries", self._person_entity.name)
+            _LOGGER.error("Could not find all 9 PHQ-9 question entities for %s after multiple retries", self._person_entity.original_name)
 
         self.hass.async_create_task(_find_question_entities_with_retry())
 
@@ -165,12 +165,12 @@ class PHQ9LastEvaluatedSensor(SensorEntity):
                 entity_registry = er.async_get(self.hass)
                 self._all_question_entity_ids = []
                 for i in range(9):
-                    unique_id = f"phq9_{self._person_entity.unique_id}_{i+1}"
+                    unique_id = f"phq9_q{i+1}_{self._person_entity.unique_id}"
                     entity_id = entity_registry.async_get_entity_id("select", DOMAIN, unique_id)
                     if entity_id:
                         self._all_question_entity_ids.append(entity_id)
 
-                difficulty_unique_id = f"phq9_{self._person_entity.unique_id}_difficulty"
+                difficulty_unique_id = f"phq9_difficulty_{self._person_entity.unique_id}"
                 difficulty_entity_id = entity_registry.async_get_entity_id("select", DOMAIN, difficulty_unique_id)
                 if difficulty_entity_id:
                     self._all_question_entity_ids.append(difficulty_entity_id)
@@ -183,9 +183,9 @@ class PHQ9LastEvaluatedSensor(SensorEntity):
                     )
                     return
 
-                await asyncio.sleep(10)
+                await asyncio.sleep(0)
 
-            _LOGGER.error("Could not find all 10 PHQ-9 input entities for %s after multiple retries", self._person_entity.name)
+            _LOGGER.error("Could not find all 10 PHQ-9 input entities for %s after multiple retries", self._person_entity.original_name)
 
         self.hass.async_create_task(_find_question_entities_with_retry())
 
@@ -239,9 +239,9 @@ class PHQ9ScoreInterpretationSensor(SensorEntity):
                     self.hass.async_create_task(self._async_update_interpretation(None))
                     return
 
-                await asyncio.sleep(10)
+                await asyncio.sleep(0)
 
-            _LOGGER.error("Could not find total score entity for %s after multiple retries", self._person_entity.name)
+            _LOGGER.error("Could not find total score entity for %s after multiple retries", self._person_entity.original_name)
 
         self.hass.async_create_task(_find_score_entity_with_retry())
 
