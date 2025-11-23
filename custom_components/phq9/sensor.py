@@ -101,10 +101,11 @@ class PHQ9TotalScoreSensor(SensorEntity):
             entity_registry = er.async_get(self.hass)
             self._question_entity_ids = []
             for i in range(9):
-                unique_id = f"phq9_{self._person_entity.unique_id}_{i+1}"
+                unique_id = f"{self._person_entity.unique_id}_q{i+1}"
                 entity_id = entity_registry.async_get_entity_id(
                     "select", DOMAIN, unique_id
                 )
+
                 if entity_id:
                     self._question_entity_ids.append(entity_id)
 
@@ -163,7 +164,7 @@ class PHQ9LastEvaluatedSensor(SensorEntity):
             entity_registry = er.async_get(self.hass)
             self._all_question_entity_ids = []
             for i in range(9):
-                unique_id = f"phq9_{self._person_entity.unique_id}_{i+1}"
+                unique_id = f"{self._person_entity.unique_id}_{i+1}"
                 entity_id = entity_registry.async_get_entity_id(
                     "select", DOMAIN, unique_id
                 )
@@ -171,7 +172,7 @@ class PHQ9LastEvaluatedSensor(SensorEntity):
                     self._all_question_entity_ids.append(entity_id)
 
             difficulty_unique_id = (
-                f"phq9_{self._person_entity.unique_id}_difficulty"
+                f"{self._person_entity.unique_id}_difficulty"
             )
             difficulty_entity_id = entity_registry.async_get_entity_id(
                 "select", DOMAIN, difficulty_unique_id
@@ -230,7 +231,7 @@ class PHQ9ScoreInterpretationSensor(SensorEntity):
         async def _find_score_entity_with_retry():
             """Find the score entity, retrying if necessary."""
             entity_registry = er.async_get(self.hass)
-            unique_id = f"phq9_{self._person_entity.unique_id}_score"
+            unique_id = f"{self._person_entity.unique_id}_score"
             self._total_score_entity_id = entity_registry.async_get_entity_id(
                 "sensor", DOMAIN, unique_id
             )
