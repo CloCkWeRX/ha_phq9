@@ -28,20 +28,6 @@ async def async_setup_entry(
 ) -> None:
     """Set up the PHQ-9 input selects."""
 
-    # translations = await async_get_translations(hass, hass.config.language, "component", [DOMAIN])
-    translations = await async_get_translations(hass, hass.config.language, "component")
-    print("HIIIII")
-    print(hass.config.language)
-    print(translations)
-    phq9_answers = [
-        translations[f"component.{DOMAIN}.entity.select.phq9_answers.state.{key}"]
-        for key in PHQ9_ANSWER_KEYS
-    ]
-    difficulty_answers = [
-        translations[f"component.{DOMAIN}.entity.select.difficulty_answers.state.{key}"]
-        for key in DIFFICULTY_ANSWER_KEYS
-    ]
-
     entity_registry = er.async_get(hass)
 
     person_entities = [
@@ -62,9 +48,9 @@ async def async_setup_entry(
                     hass,
                     person_entity,
                     device_info,
-                    f"phq9_q{i+1}_{person_entity.unique_id}",
+                    f"{person_entity.unique_id}_q{i+1}",
                     f"phq9_question_{i+1}",
-                    phq9_answers,
+                    PHQ9_ANSWER_KEYS,
                 )
             )
 
@@ -73,9 +59,9 @@ async def async_setup_entry(
                 hass,
                 person_entity,
                 device_info,
-                f"phq9_difficulty_{person_entity.unique_id}",
+                f"{person_entity.unique_id}_difficulty",
                 "phq9_difficulty",
-                difficulty_answers,
+                DIFFICULTY_ANSWER_KEYS,
             )
         )
 

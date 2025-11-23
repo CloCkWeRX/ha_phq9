@@ -46,19 +46,19 @@ views:
             heading: PHQ-9
           - type: entities
             entities:
-              - select.phq_9_question_1_jane
-              - select.phq_9_question_2_jane
-              - select.phq_9_question_3_jane
-              - select.phq_9_question_4_jane
-              - select.phq_9_question_5_jane
-              - select.phq_9_question_6_jane
-              - select.phq_9_question_7_jane
-              - select.phq_9_question_8_jane
-              - select.phq_9_question_9_jane
-              - select.phq_9_difficulty_jane
-              - sensor.phq_9_score_interpretation_jane
-              - sensor.phq_9_total_score_jane
-              - sensor.phq_9_last_evaluated_jane
+              - select.phq_9_jane_q1
+              - select.phq_9_jane_q2
+              - select.phq_9_jane_q3
+              - select.phq_9_jane_q4
+              - select.phq_9_jane_q5
+              - select.phq_9_jane_q6
+              - select.phq_9_jane_q7
+              - select.phq_9_jane_q8
+              - select.phq_9_jane_q9
+              - select.phq_9_jane_difficulty
+              - sensor.phq_9_jane_score_interpretation
+              - sensor.phq_9_jane_total_score
+              - sensor.phq_9_jane_last_evaluated
 ```
 
 ## Example Automations
@@ -72,7 +72,7 @@ automation:
   - alias: "PHQ-9 Moderately Severe Score Notification for Jane"
     trigger:
       - platform: state
-        entity_id: sensor.phq_9_score_interpretation_jane # Assumes a person named Jane
+        entity_id: sensor.phq_9_jane_score_interpretation # Assumes a person named Jane
         to: "Moderately Severe"
     action:
       - service: persistent_notification.create
@@ -99,20 +99,20 @@ automation:
       - service: input_select.select_option
         target:
           entity_id:
-            - input_select.phq_9_question_1_jane
-            - input_select.phq_9_question_2_jane
-            - input_select.phq_9_question_3_jane
-            - input_select.phq_9_question_4_jane
-            - input_select.phq_9_question_5_jane
-            - input_select.phq_9_question_6_jane
-            - input_select.phq_9_question_7_jane
-            - input_select.phq_9_question_8_jane
-            - input_select.phq_9_question_9_jane
+            - input_select.phq9_jane_q1
+            - input_select.phq9_jane_q2
+            - input_select.phq9_jane_q3
+            - input_select.phq9_jane_q4
+            - input_select.phq9_jane_q5
+            - input_select.phq9_jane_q6
+            - input_select.phq9_jane_q7
+            - input_select.phq9_jane_q8
+            - input_select.phq9_jane_q9
         data:
           option: "Not at all"
       - service: input_select.select_option
         target:
-          entity_id: input_select.phq_9_difficulty_jane
+          entity_id: input_select.phq9_jane_difficulty
         data:
           option: "Not difficult at all"
       - service: persistent_notification.create

@@ -48,7 +48,7 @@ async def async_setup_entry(
                 hass,
                 person_entity,
                 device_info,
-                f"phq9_{person_entity.unique_id}_score",
+                f"{person_entity.unique_id}_score",
             )
         )
 
@@ -57,7 +57,7 @@ async def async_setup_entry(
                 hass,
                 person_entity,
                 device_info,
-                f"phq9_{person_entity.unique_id}_last_evaluated",
+                f"{person_entity.unique_id}_last_evaluated",
             )
         )
 
@@ -66,7 +66,7 @@ async def async_setup_entry(
                 hass,
                 person_entity,
                 device_info,
-                f"phq9_{person_entity.unique_id}_score_interpretation",
+                f"{person_entity.unique_id}_score_interpretation",
             )
         )
 
@@ -98,34 +98,26 @@ class PHQ9TotalScoreSensor(SensorEntity):
 
         async def _find_question_entities_with_retry():
             """Find the question entities, retrying if necessary."""
-            for attempt in range(30):  # 30 attempts * 10 seconds = 5 minutes
-                entity_registry = er.async_get(self.hass)
-                self._question_entity_ids = []
-                for i in range(9):
-                    unique_id = f"phq9_{self._person_entity.unique_id}_{i+1}"
-                    entity_id = entity_registry.async_get_entity_id(
-                        "select", DOMAIN, unique_id
-                    )
-                    if entity_id:
-                        self._question_entity_ids.append(entity_id)
+            entity_registry = er.async_get(self.hass)
+            self._question_entity_ids = []
+            for i in range(9):
+                unique_id = f"phq9_{self._person_entity.unique_id}_{i+1}"
+                entity_id = entity_registry.async_get_entity_id(
+                    "select", DOMAIN, unique_id
+                )
+                if entity_id:
+                    self._question_entity_ids.append(entity_id)
 
-                if len(self._question_entity_ids) == 9:
-                    self.async_on_remove(
-                        async_track_state_change_event(
-                            self.hass,
-                            self._question_entity_ids,
-                            self._async_update_score,
-                        )
-                    )
-                    self.hass.async_create_task(self._async_update_score(None))
-                    return
-
-                await asyncio.sleep(10)
-
-            _LOGGER.error(
-                "Could not find all 9 PHQ-9 question entities for %s after multiple retries",
-                self._person_entity.name,
+            self.async_on_remove(
+                async_track_state_change_event(
+                    self.hass,
+                    self._question_entity_ids,
+                    self._async_update_score,
+                )
             )
+            self.hass.async_create_task(self._async_update_score(None))
+            return
+
 
         self.hass.async_create_task(_find_question_entities_with_retry())
 
@@ -166,43 +158,35 @@ class PHQ9LastEvaluatedSensor(SensorEntity):
         await super().async_added_to_hass()
 
         async def _find_question_entities_with_retry():
-            """Find the question entities, retrying if necessary."""
-            for attempt in range(30):  # 30 attempts * 10 seconds = 5 minutes
-                entity_registry = er.async_get(self.hass)
-                self._all_question_entity_ids = []
-                for i in range(9):
-                    unique_id = f"phq9_{self._person_entity.unique_id}_{i+1}"
-                    entity_id = entity_registry.async_get_entity_id(
-                        "select", DOMAIN, unique_id
-                    )
-                    if entity_id:
-                        self._all_question_entity_ids.append(entity_id)
+            """Find the question entities"""
 
-                difficulty_unique_id = (
-                    f"phq9_{self._person_entity.unique_id}_difficulty"
+            entity_registry = er.async_get(self.hass)
+            self._all_question_entity_ids = []
+            for i in range(9):
+                unique_id = f"phq9_{self._person_entity.unique_id}_{i+1}"
+                entity_id = entity_registry.async_get_entity_id(
+                    "select", DOMAIN, unique_id
                 )
-                difficulty_entity_id = entity_registry.async_get_entity_id(
-                    "select", DOMAIN, difficulty_unique_id
-                )
-                if difficulty_entity_id:
-                    self._all_question_entity_ids.append(difficulty_entity_id)
+                if entity_id:
+                    self._all_question_entity_ids.append(entity_id)
 
-                if len(self._all_question_entity_ids) == 10:
-                    self.async_on_remove(
-                        async_track_state_change_event(
-                            self.hass,
-                            self._all_question_entity_ids,
-                            self._async_update_timestamp,
-                        )
-                    )
-                    return
-
-                await asyncio.sleep(10)
-
-            _LOGGER.error(
-                "Could not find all 10 PHQ-9 input entities for %s after multiple retries",
-                self._person_entity.name,
+            difficulty_unique_id = (
+                f"phq9_{self._person_entity.unique_id}_difficulty"
             )
+            difficulty_entity_id = entity_registry.async_get_entity_id(
+                "select", DOMAIN, difficulty_unique_id
+            )
+            if difficulty_entity_id:
+                self._all_question_entity_ids.append(difficulty_entity_id)
+
+            self.async_on_remove(
+                async_track_state_change_event(
+                    self.hass,
+                    self._all_question_entity_ids,
+                    self._async_update_timestamp,
+                )
+            )
+            return
 
         self.hass.async_create_task(_find_question_entities_with_retry())
 
@@ -245,30 +229,22 @@ class PHQ9ScoreInterpretationSensor(SensorEntity):
 
         async def _find_score_entity_with_retry():
             """Find the score entity, retrying if necessary."""
-            for attempt in range(30):  # 30 attempts * 10 seconds = 5 minutes
-                entity_registry = er.async_get(self.hass)
-                unique_id = f"phq9_{self._person_entity.unique_id}_score"
-                self._total_score_entity_id = entity_registry.async_get_entity_id(
-                    "sensor", DOMAIN, unique_id
-                )
-
-                if self._total_score_entity_id:
-                    self.async_on_remove(
-                        async_track_state_change_event(
-                            self.hass,
-                            self._total_score_entity_id,
-                            self._async_update_interpretation,
-                        )
-                    )
-                    self.hass.async_create_task(self._async_update_interpretation(None))
-                    return
-
-                await asyncio.sleep(10)
-
-            _LOGGER.error(
-                "Could not find total score entity for %s after multiple retries",
-                self._person_entity.name,
+            entity_registry = er.async_get(self.hass)
+            unique_id = f"phq9_{self._person_entity.unique_id}_score"
+            self._total_score_entity_id = entity_registry.async_get_entity_id(
+                "sensor", DOMAIN, unique_id
             )
+
+            if self._total_score_entity_id:
+                self.async_on_remove(
+                    async_track_state_change_event(
+                        self.hass,
+                        self._total_score_entity_id,
+                        self._async_update_interpretation,
+                    )
+                )
+                self.hass.async_create_task(self._async_update_interpretation(None))
+                return
 
         self.hass.async_create_task(_find_score_entity_with_retry())
 
