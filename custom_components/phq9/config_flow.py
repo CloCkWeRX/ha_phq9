@@ -1,6 +1,8 @@
 """Config flow for PHQ-9."""
+
 from homeassistant import config_entries
 from .const import DOMAIN
+
 
 class PHQ9ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for PHQ-9."""

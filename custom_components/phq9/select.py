@@ -1,6 +1,7 @@
 """Platform for PHQ-9 input selects.
 Kroenke K, Spitzer RL, Williams JB. The PHQ-9: validity of a brief depression severity measure. J Gen Intern Med. 2001 Sep;16(9):606-13. doi: 10.1046/j.1525-1497.2001.016009606.x. PMID: 11556941; PMCID: PMC1495268.
 """
+
 from __future__ import annotations
 from typing import Iterable
 
@@ -19,6 +20,7 @@ from .const import DOMAIN, PHQ9_ANSWER_KEYS, DIFFICULTY_ANSWER_KEYS
 
 _LOGGER = logging.getLogger(__name__)
 
+
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: ConfigEntry,
@@ -26,13 +28,18 @@ async def async_setup_entry(
 ) -> None:
     """Set up the PHQ-9 input selects."""
 
-    translations = await async_get_translations(hass, hass.config.language, "component", [DOMAIN])
-
+    # translations = await async_get_translations(hass, hass.config.language, "component", [DOMAIN])
+    translations = await async_get_translations(hass, hass.config.language, "component")
+    print("HIIIII")
+    print(hass.config.language)
+    print(translations)
     phq9_answers = [
-        translations[f"component.{DOMAIN}.entity.select.phq9_answers.state.{key}"] for key in PHQ9_ANSWER_KEYS
+        translations[f"component.{DOMAIN}.entity.select.phq9_answers.state.{key}"]
+        for key in PHQ9_ANSWER_KEYS
     ]
     difficulty_answers = [
-        translations[f"component.{DOMAIN}.entity.select.difficulty_answers.state.{key}"] for key in DIFFICULTY_ANSWER_KEYS
+        translations[f"component.{DOMAIN}.entity.select.difficulty_answers.state.{key}"]
+        for key in DIFFICULTY_ANSWER_KEYS
     ]
 
     entity_registry = er.async_get(hass)
