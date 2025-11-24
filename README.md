@@ -33,7 +33,7 @@ Place the `custom_components` folder in your configuration directory (or add its
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=CloCkWeRX&repository=ha_phq9&category=integration)
 
-If your have have a person named `jane`; the generated sensors should follow the format of `select.phq_9_question_1_jane`
+If your have have a person named `jane`; the generated sensors should follow the format of `select.phq9_jane_q1`
 
 Set up a dashboard as raw YAML.
 ```
