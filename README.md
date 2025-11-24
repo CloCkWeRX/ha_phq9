@@ -71,8 +71,8 @@ automation:
   - alias: "PHQ-9 Moderately Severe Score Notification for Jane"
     trigger:
       - platform: state
-        entity_id: sensor.phq_9_jane_score_interpretation # Assumes a person named Jane
-        to: "Moderately Severe"
+        entity_id: sensor.phq9_jane_score_interpretation # Assumes a person named Jane
+        to: "moderately_severe"
     action:
       - service: persistent_notification.create
         data:
@@ -108,12 +108,12 @@ automation:
             - input_select.phq9_jane_q8
             - input_select.phq9_jane_q9
         data:
-          option: "Not at all"
+          option: "not_at_all"
       - service: input_select.select_option
         target:
           entity_id: input_select.phq9_jane_difficulty
         data:
-          option: "Not difficult at all"
+          option: "not_difficult_at_all"
       - service: persistent_notification.create
         data:
           title: "PHQ-9 Weekly Reminder"
