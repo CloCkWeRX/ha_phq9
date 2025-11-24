@@ -12,34 +12,94 @@
     "entity": {
         "select": {
             "phq9_question_1": {
-                "name": "Little interest or pleasure in doing things"
+                "name": "Little interest or pleasure in doing things",
+                "state": {
+                    "not_at_all": "Not at all",
+                    "several_days": "Several days",
+                    "more_than_half_the_days": "More than half the days",
+                    "nearly_every_day": "Nearly every day"
+                }
             },
             "phq9_question_2": {
-                "name": "Feeling down, depressed, or hopeless"
+                "name": "Feeling down, depressed, or hopeless",
+                "state": {
+                    "not_at_all": "Not at all",
+                    "several_days": "Several days",
+                    "more_than_half_the_days": "More than half the days",
+                    "nearly_every_day": "Nearly every day"
+                }
             },
             "phq9_question_3": {
-                "name": "Trouble falling or staying asleep, or sleeping too much"
+                "name": "Trouble falling or staying asleep, or sleeping too much",
+                "state": {
+                    "not_at_all": "Not at all",
+                    "several_days": "Several days",
+                    "more_than_half_the_days": "More than half the days",
+                    "nearly_every_day": "Nearly every day"
+                }
             },
             "phq9_question_4": {
-                "name": "Feeling tired or having little energy"
+                "name": "Feeling tired or having little energy",
+                "state": {
+                    "not_at_all": "Not at all",
+                    "several_days": "Several days",
+                    "more_than_half_the_days": "More than half the days",
+                    "nearly_every_day": "Nearly every day"
+                }
             },
             "phq9_question_5": {
-                "name": "Poor appetite or overeating"
+                "name": "Poor appetite or overeating",
+                "state": {
+                    "not_at_all": "Not at all",
+                    "several_days": "Several days",
+                    "more_than_half_the_days": "More than half the days",
+                    "nearly_every_day": "Nearly every day"
+                }
             },
             "phq9_question_6": {
-                "name": "Feeling bad about yourself - or that you are a failure or have let yourself or your family down"
+                "name": "Feeling bad about yourself - or that you are a failure or have let yourself or your family down",
+                "state": {
+                    "not_at_all": "Not at all",
+                    "several_days": "Several days",
+                    "more_than_half_the_days": "More than half the days",
+                    "nearly_every_day": "Nearly every day"
+                }
             },
             "phq9_question_7": {
-                "name": "Trouble concentrating on things, such as reading the newspaper or watching television"
+                "name": "Trouble concentrating on things, such as reading the newspaper or watching television",
+                "state": {
+                    "not_at_all": "Not at all",
+                    "several_days": "Several days",
+                    "more_than_half_the_days": "More than half the days",
+                    "nearly_every_day": "Nearly every day"
+                }
             },
             "phq9_question_8": {
-                "name": "Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual"
+                "name": "Moving or speaking so slowly that other people could have noticed? Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual",
+                "state": {
+                    "not_at_all": "Not at all",
+                    "several_days": "Several days",
+                    "more_than_half_the_days": "More than half the days",
+                    "nearly_every_day": "Nearly every day"
+                }
             },
             "phq9_question_9": {
-                "name": "Thoughts that you would be better off dead or of hurting yourself in some way"
+                "name": "Thoughts that you would be better off dead or of hurting yourself in some way",
+                "state": {
+                    "not_at_all": "Not at all",
+                    "several_days": "Several days",
+                    "more_than_half_the_days": "More than half the days",
+                    "nearly_every_day": "Nearly every day"
+                }
             },
             "phq9_difficulty": {
-                "name": "If you checked off any problems, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?"
+                "name": "If you checked off any problems, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?",
+                "state": {
+                    "not_at_all": "Not at all",
+                    "several_days": "Several days",
+                    "more_than_half_the_days": "More than half the days",
+                    "nearly_every_day": "Nearly every day"
+                }
             },
             "phq9_answers": {
                 "state": {
