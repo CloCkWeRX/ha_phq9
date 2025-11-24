@@ -46,19 +46,18 @@ views:
             heading: PHQ-9
           - type: entities
             entities:
-              - select.phq_9_jane_q1
-              - select.phq_9_jane_q2
-              - select.phq_9_jane_q3
-              - select.phq_9_jane_q4
-              - select.phq_9_jane_q5
-              - select.phq_9_jane_q6
-              - select.phq_9_jane_q7
-              - select.phq_9_jane_q8
-              - select.phq_9_jane_q9
-              - select.phq_9_jane_difficulty
-              - sensor.phq_9_jane_score_interpretation
-              - sensor.phq_9_jane_total_score
-              - sensor.phq_9_jane_last_evaluated
+              - select.phq9_jane_q1
+              - select.phq9_jane_q2
+              - select.phq9_jane_q3
+              - select.phq9_jane_q4
+              - select.phq9_jane_q5
+              - select.phq9_jane_q6
+              - select.phq9_jane_q7
+              - select.phq9_jane_q8
+              - select.phq9_jane_q9
+              - select.phq9_jane_difficulty
+              - sensor.phq9_jane_score_interpretation
+              - sensor.phq9_jane_score
 ```
 
 ## Example Automations
