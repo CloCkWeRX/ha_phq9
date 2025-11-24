@@ -91,6 +91,7 @@ class PHQ9TotalScoreSensor(SensorEntity):
         self._attr_native_value = 0
         self._question_entity_ids = []
         self._attr_translation_key = "phq9_total_score"
+        self._attr_has_entity_name = True
 
     async def async_added_to_hass(self) -> None:
         """Register state change listener and discover entity IDs."""
@@ -153,6 +154,7 @@ class PHQ9LastEvaluatedSensor(SensorEntity):
         self._attr_native_value = None
         self._all_question_entity_ids = []
         self._attr_translation_key = "phq9_last_evaluated"
+        self._attr_has_entity_name = True
 
     async def async_added_to_hass(self) -> None:
         """Register state change listener and discover entity IDs."""
@@ -223,6 +225,7 @@ class PHQ9ScoreInterpretationSensor(SensorEntity):
         self._attr_native_value = "none_minimal"
         self._total_score_entity_id = None
         self._attr_translation_key = "phq9_score_interpretation"
+        self._attr_has_entity_name = True
 
     async def async_added_to_hass(self) -> None:
         """Register state change listener."""

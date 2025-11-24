@@ -88,6 +88,7 @@ class PHQ9QuestionSelect(SelectEntity):
         self._attr_translation_key = translation_key
         self._attr_options = options
         self._attr_current_option = options[0] if options else None
+        self._attr_has_entity_name = True
 
     @property
     def extra_state_attributes(self):
