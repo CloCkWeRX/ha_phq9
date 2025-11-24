@@ -72,11 +72,11 @@ async def test_total_score_sensor_updates(hass: HomeAssistant) -> None:
 
     # Set the state of the select entities
     for i in range(9):
-        hass.states.async_set(f"select.phq9_1234_q1{i+1}", "Several days")
+        hass.states.async_set(f"select.phq9_1234_q{i+1}", "several_days")
         await hass.async_block_till_done()
 
     # Check that the total score sensor has updated
-    assert hass.states.get("sensor.phq9_1234_total_score").state == "9"
+    assert hass.states.get("sensor.phq9_1234_score").state == "9"
 
 
 async def test_score_interpretation_sensor_updates(hass: HomeAssistant) -> None:
@@ -98,7 +98,7 @@ async def test_score_interpretation_sensor_updates(hass: HomeAssistant) -> None:
     assert entry.state is ConfigEntryState.LOADED
 
     # Set the state of the total score sensor
-    hass.states.async_set("sensor.phq9_1234_total_score", "15")
+    hass.states.async_set("sensor.phq9_1234_score", "15")
     await hass.async_block_till_done()
 
     # Check that the score interpretation sensor has updated
